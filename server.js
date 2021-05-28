@@ -102,7 +102,7 @@ app.put("/changePassword", changePassword.handleChangePassword(db, bcrypt));
 
 app.post("/eliminarUsuario", eliminarUsuario.handleEliminarUsuario(db));
 
-app.listen(3001, () => {
-    console.log("Corriendo en el puerto 3001");
+app.listen(3000, () => {
+    console.log("Corriendo en el puerto 3000");
 });
 
