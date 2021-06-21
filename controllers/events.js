@@ -6,6 +6,7 @@ const handleGetEvents = (db) => (req, res) => {
                 ar.Especie,
                 rte.Fecha AS FechaRescate,
                 est.Fecha AS FechaEsterilizacion,
+                est.EstaEsterilizado,
                 cv.Vacuna1 as vacuna1,
                 cv.Vacuna2 as vacuna2,
                 cv.Vacuna3 as vacuna3,
@@ -21,7 +22,6 @@ const handleGetEvents = (db) => (req, res) => {
                 GROUP_CONCAT(DISTINCT trat.FechaInicio separator ', ') AS IniciosDeTratamiento,
                 GROUP_CONCAT(DISTINCT trat.FechaFinal separator ', ') AS FinesDeTratamiento,
                 ht.FechaInicio AS FechaInicioHT,
-                ht.FechaFinal AS FechaFinalHT,
                 adop.Visita_De_Adopcion AS VisitaAdopcion,
                 adop.Fecha_Adopcion AS FechaAdopcion
                 
