@@ -40,9 +40,9 @@ const db = knex({
 });
 
 //* --------- Controllers -----------
-app.post("/consulta", (req, res) => {
-    consulta.handleConsultaPost(req, res, db);
-});
+// app.post("/consulta", (req, res) => {
+//     consulta.handleConsultaPost(req, res, db);
+// });
 
 app.get("/registroGeneral", (req, res) => {
     registroGeneral.handleGetRG(req, res, db);
