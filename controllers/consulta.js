@@ -1,80 +1,80 @@
 const handleConsultaPost = (req, res, db) => {
-    const selectClause = {
-        General: `select    ar.ID_Animal,
-									ar.Foto,
-                                    ar.Nombre,
-                                    ar.Edad,
-                                    ar.Genero,
-                                    ar.Especie,
-                                    ar.Estatus,
-                                    ar.SenasParticulares,
-                                    rte.Fecha AS FechaRescate,
-                                    dirrte.Calle AS RteCalle,
-                                    dirrte.Numero AS RteNumero,
-                                    dirrte.Colonia AS RteColonia,
-                                    dirrte.Municipio AS RteMunicipio,
-                                    GROUP_CONCAT(rta.Nombre separator ', ') AS Rescatistas `,
+  const selectClause = {
+    General: `select    ar.ID_Animal,
+                        ar.Foto,
+                        ar.Nombre,
+                        ar.Edad,
+                        ar.Genero,
+                        ar.Especie,
+                        ar.Estatus,
+                        ar.SenasParticulares,
+                        rte.Fecha AS FechaRescate,
+                        dirrte.Calle AS RteCalle,
+                        dirrte.Numero AS RteNumero,
+                        dirrte.Colonia AS RteColonia,
+                        dirrte.Municipio AS RteMunicipio,
+                        GROUP_CONCAT(rta.Nombre separator ', ') AS Rescatistas `,
 
-        ExpedienteMedico: `select   ar.ID_Animal,
-									em.Foto1 as Foto,
-                                    diag.Atropellamiento,
-                                    diag.TVT, 
-                                    diag.Sarna_Piel,
-                                    diag.Viral,
-                                    diag.Embarazo, 
-                                    diag.Cachorros,
-                                    diag.Hemoparasitos, 
-                                    diag.Otro,
-                                    ar.Especie,
-									cv.Vacuna1,
-                                    cv.Vacuna2,
-									cv.Vacuna3,
-									cv.Vacuna4,
-									cv.Vacuna5,
-                                    est.Fecha AS FechaEsterilizacion,
-                                    est.CitaAgendada,
-                                    est.EstaEsterilizado `,
+    ExpedienteMedico: `select   ar.ID_Animal,
+                                em.Foto1 as Foto,
+                                diag.Atropellamiento,
+                                diag.TVT,
+                                diag.Sarna_Piel,
+                                diag.Viral,
+                                diag.Embarazo,
+                                diag.Cachorros,
+                                diag.Hemoparasitos,
+                                diag.Otro,
+                                ar.Especie,
+                                cv.Vacuna1,
+                                cv.Vacuna2,
+                                cv.Vacuna3,
+                                cv.Vacuna4,
+                                cv.Vacuna5,
+                                est.Fecha AS FechaEsterilizacion,
+                                est.CitaAgendada,
+                                est.EstaEsterilizado `,
 
-        HogarTemporal: `select     ar.ID_Animal,
-									ht.Foto,
-                                    ht.Tipo_HT,
-                                    ht.Responsable AS ResponsableHT,
-                                    ht.Telefono AS TelefonoHT,
-                                    ht.FechaInicio AS FechaInicioHT,
-                                    ht.FechaFinal AS FechaFinalHT,
-                                    dirht.Calle AS CalleHT,
-                                    dirht.Numero AS NumeroHT,
-                                    dirht.Colonia AS ColoniaHT,
-                                    dirht.Municipio AS MunicipioHT `,
+    HogarTemporal: `select    ar.ID_Animal,
+                              ht.Foto,
+                              ht.Tipo_HT,
+                              ht.Responsable AS ResponsableHT,
+                              ht.Telefono AS TelefonoHT,
+                              ht.FechaInicio AS FechaInicioHT,
+                              ht.FechaFinal AS FechaFinalHT,
+                              dirht.Calle AS CalleHT,
+                              dirht.Numero AS NumeroHT,
+                              dirht.Colonia AS ColoniaHT,
+                              dirht.Municipio AS MunicipioHT `,
 
-        Adopcion: `select       ar.ID_Animal,
-                                adop.Foto,
-                                adop.ID_PETCO,
-                                adte.Nombre AS NombreAdte,
-                                adte.Telefono AS TelefonoAdte,
-                                adop.NombreAdoptado AS Adoptado,
-                                adop.Medio AS MedioAdop,
-                                adop.Fecha_Adopcion AS FechaAdop,
-                                adop.Visita_De_Adopcion AS VisitaAdop,
-                                diradte.Calle AS CalleAdte,
-                                diradte.Numero AS NumeroAdte,
-                                diradte.Colonia AS ColoniaAdte,
-                                diradte.Municipio AS MunicipioAdte `,
-};
+    Adopcion: `select   ar.ID_Animal,
+                        adop.Foto,
+                        adop.ID_PETCO,
+                        adte.Nombre AS NombreAdte,
+                        adte.Telefono AS TelefonoAdte,
+                        adop.NombreAdoptado AS Adoptado,
+                        adop.Medio AS MedioAdop,
+                        adop.Fecha_Adopcion AS FechaAdop,
+                        adop.Visita_De_Adopcion AS VisitaAdop,
+                        diradte.Calle AS CalleAdte,
+                        diradte.Numero AS NumeroAdte,
+                        diradte.Colonia AS ColoniaAdte,
+                        diradte.Municipio AS MunicipioAdte `,
+  };
 
-    const fromClause = `from    ANIMAL_RESCATADO ar,
-                                RESCATISTA rta,
-                                RESCATE rte,
-                                DIRECCION_RESCATE dirrte,
-                                EXPEDIENTE_MEDICO em,
-                                DIAGNOSTICO diag,
-                                CARTILLA_DE_VACUNACION cv,
-                                ESTERILIZACION est,
-                                HOGAR_TEMPORAL ht,
-                                DIRECCION_HT dirht,
-                                ADOPCION adop,
-                                ADOPTANTE adte,
-                                DIRECCION_ADOPTANTE diradte`;
+  const fromClause = `from    ANIMAL_RESCATADO ar,
+                              RESCATISTA rta,
+                              RESCATE rte,
+                              DIRECCION_RESCATE dirrte,
+                              EXPEDIENTE_MEDICO em,
+                              DIAGNOSTICO diag,
+                              CARTILLA_DE_VACUNACION cv,
+                              ESTERILIZACION est,
+                              HOGAR_TEMPORAL ht,
+                              DIRECCION_HT dirht,
+                              ADOPCION adop,
+                              ADOPTANTE adte,
+                              DIRECCION_ADOPTANTE diradte`;
 
     const joinConditions = ` where ar.ID_Animal = rta.ID_Animal
                             AND ar.ID_Animal = rte.ID_Animal
@@ -153,9 +153,7 @@ const handleConsultaPost = (req, res, db) => {
         const column = hashTable[ordenarPor];
         orderBy = "ORDER BY " + "if(" + column + "= '' or " + column + " is null,1,0)," + column + " ";
 
-        orderBy += ordenarDeMenorAMayor ? "ASC" : "DESC";
-
-        orderBy += ";";
+        orderBy += ordenarDeMenorAMayor ? "ASC " : "DESC ";
     }
 
     if (genero) {
@@ -282,7 +280,8 @@ const handleConsultaPost = (req, res, db) => {
             joinConditions +
             filterConditions +
             groupBy +
-            orderBy
+            orderBy +
+            "LIMIT 15"
     )
         .then((data) => {
             res.json(data[0]);
